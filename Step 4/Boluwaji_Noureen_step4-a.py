@@ -1,8 +1,8 @@
 def main():
-    print('Welcome! This program computes Sentiment Analysis.')
+    print('Welcome! This program performs Sentiment Analysis.')
     print('-----------------------------------------')
-    negatives()
-    positives()
+    positive_words()   # Function to open and read the positive words
+    negative_words()   # Function to open and read thenegative words
     text = input('Please enter the text you want to analyze: ')         # Get the text from the users
 
     special_characters = [',' , '.' ,'”' , '’' , '"' , "'"  , '?' , '!' , '&', '@', '*' , '#']        # List of characters to be removed
@@ -13,8 +13,8 @@ def main():
     text = text.lower()           # Converts block of strings to lowercase characters
     text = text.split()           # Converts string to list
 
-    positive_output = get_pos(text, positives())     # Call the get_pos function to run the positive attitude analysis
-    negative_output = get_neg(text, negatives())     # Call the get_pos function to run the negative attitude analysis
+    positive_output = get_pos(text, positive_words())     # Call the get_pos function to run the positive attitude analysis
+    negative_output = get_neg(text, negative_words())     # Call the get_pos function to run the negative attitude analysis
     valence = positive_output[2] - negative_output[2]       #  positive attitude index subtracted from the negative attitude index
 
     # Display the results
@@ -27,10 +27,10 @@ def main():
     print('Positive or Negative words in a text / the length of words in the text.')
     print()
     print('\tThe Positive Attitude Index:', format(positive_output[2], '.3f'))      # Displays the positive attitude index
-    print('\tThe positive word(s):', positive_output[3])                # Displays the positive words
+    print('\tThe Positive word(s):', positive_output[3])                # Displays the positive words
     print()
     print('\tThe Negative Attitude Index:', format(negative_output[2], '.3f'))      # Displays the negative attitude index
-    print('\tThe negative word(s):', negative_output[3])            # Displays the negative words
+    print('\tThe Negative word(s):', negative_output[3])            # Displays the negative words
     print()
     print('The total count for:')
     print('\tPositive words:', positive_output[0])
@@ -42,8 +42,42 @@ def main():
     print('Thanks for using the program.')
 
 
- # ----------- Define the get_pos function
+# ----------- Define the positive_words function
 
+def positive_words():
+    # Open a file named positives.txt.
+    infile = open('positives.txt', 'r')
+
+    # Read the file's contents.
+    file_contents = infile.read()
+
+    # Close the file.
+    infile.close()
+
+    # Convert the strings to list.
+    positives_words = file_contents.split()
+    
+    return positives_words      # Return as a list of negative words
+
+
+# ----------- Define the negative_words function
+def negative_words():
+    # Open a file named negatives.txt.
+    infile = open('negatives.txt', 'r')
+
+    # Read the file's contents.
+    file_contents = infile.read()
+
+    # Close the file.
+    infile.close()
+
+    # Convert the strings to list.
+    negatives_words = file_contents.split()
+
+    return negatives_words      # Return as a list of negative words
+
+
+# ----------- Define the get_pos function
 def get_pos(text, positive_words):
 
     pos_words = []
@@ -62,7 +96,8 @@ def get_pos(text, positive_words):
         
     return pos_count, length, pos_attitude, pos_words          # Outputs as a tuple
 
- # ----------- Define the get_neg function
+
+# ----------- Define the get_neg function
 
 def get_neg(text, negative_words):
     
@@ -81,34 +116,5 @@ def get_neg(text, negative_words):
     
     return neg_count, length, neg_attitude, neg_words      # Outputs as a tuple
 
-def negatives():
-    # Open a file named philosophers.txt.
-    infile = open(r'C:\Users\Boluwaji\Desktop\School Folder\MIS 5301 - Object Oriented Programming\Project\Step 4\negatives.txt', 'r')
-
-    # Read the file's contents.
-    file_contents = infile.read()
-
-    # Close the file.
-    infile.close()
-
-    # Print the data that was read into memory.
-    low = file_contents.split()
-    return low
-
-def positives():
-    # Open a file named philosophers.txt.
-    infile = open(r'C:\Users\Boluwaji\Desktop\School Folder\MIS 5301 - Object Oriented Programming\Project\Step 4\positives.txt', 'r')
-
-    # Read the file's contents.
-    file_contents = infile.read()
-
-    # Close the file.
-    infile.close()
-
-    # Print the data that was read into memory.
-    low = file_contents.split()
-    
-    return low
-
-
+# Call the main Function
 main()
